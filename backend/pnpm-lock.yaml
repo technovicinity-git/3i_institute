@@ -47,6 +47,9 @@ importers:
       morgan:
         specifier: ^1.11.0
         version: 1.11.0
+      pg:
+        specifier: ^8.22.0
+        version: 8.22.0
       resend:
         specifier: ^6.18.0
         version: 6.18.0
@@ -90,6 +93,9 @@ importers:
       '@types/node':
         specifier: ^26.1.1
         version: 26.1.1
+      '@types/pg':
+        specifier: ^8.20.0
+        version: 8.20.0
       '@types/supertest':
         specifier: ^7.2.1
         version: 7.2.1
