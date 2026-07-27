@@ -1,22 +1,16 @@
-# ========================
 # Dependencies
-# ========================
 node_modules/
 .pnp
 .pnp.js
 
-# ========================
 # Build outputs
-# ========================
 dist/
 build/
 .next/
 out/
 *.tsbuildinfo
 
-# ========================
 # Environment files
-# ========================
 .env
 .env.local
 .env.development.local
@@ -24,9 +18,7 @@ out/
 .env.production.local
 .env.*.local
 
-# ========================
 # IDE & Editor
-# ========================
 .vscode/
 .idea/
 *.swp
@@ -36,9 +28,13 @@ out/
 *.sublime-workspace
 .code-workspace
 
-# ========================
+# AI Tools
+.claude/
+.windsurf/
+.cursor/
+.copilot/
+
 # OS generated
-# ========================
 .DS_Store
 .DS_Store?
 ._*
@@ -48,9 +44,7 @@ ehthumbs.db
 Thumbs.db
 desktop.ini
 
-# ========================
 # Logs
-# ========================
 logs/
 *.log
 npm-debug.log*
@@ -58,42 +52,29 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# ========================
 # Testing
-# ========================
 coverage/
 .nyc_output/
 
-# ========================
 # Cache
-# ========================
 .cache/
 .turbo/
 *.tsbuildinfo
 
-# ========================
 # Prisma
-# ========================
 backend/prisma/migrations/
 !backend/prisma/migrations/.gitkeep
 
-# ========================
 # Uploads & Media (dev)
-# ========================
 uploads/
 temp/
 
-# ========================
 # Environment-specific
-# ========================
-# Keep .env.example, ignore actual .env
 backend/.env
 frontend/.env
 frontend/.env.local
 
-# ========================
 # Mobile (Flutter)
-# ========================
 mobile/.dart_tool/
 mobile/.packages
 mobile/.pub/
@@ -118,9 +99,7 @@ mobile/ios/*.xcworkspace
 mobile/ios/*.xcodeproj/xcuserdata
 mobile/ios/.symlinks/
 
-# ========================
 # Misc
-# ========================
 *.pem
 *.cert
 *.key
