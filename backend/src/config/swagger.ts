@@ -14,6 +14,10 @@ const options: swaggerJsdoc.Options = {
         url: config.app.url,
         description: `${config.app.env} server`,
       },
+      {
+        url: 'https://threei-institute.onrender.com',
+        description: `Production server`,
+      },
     ],
     components: {
       securitySchemes: {
