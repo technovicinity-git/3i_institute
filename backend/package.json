@@ -1,25 +1,38 @@
 {
-  "name": "3i",
+  "name": "3i-institute-api",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "3i International Islamic Institute API",
+  "main": "dist/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:push": "prisma db push",
+    "prisma:studio": "prisma studio",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\"",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.13.1",
   "dependencies": {
+    "@prisma/adapter-pg": "^7.9.0",
     "bcryptjs": "^3.0.3",
     "compression": "^1.8.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
-    "crypto": "^1.0.1",
     "dotenv": "^17.4.2",
     "ejs": "^6.0.1",
     "express": "^5.2.1",
-    "express-mongo-sanitize": "^2.2.0",
     "express-rate-limit": "^8.6.1",
     "helmet": "^8.3.0",
     "ioredis": "^5.11.1",
@@ -31,7 +44,6 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
     "@prisma/client": "^7.9.0",
     "@types/bcryptjs": "^3.0.0",
     "@types/compression": "^1.8.1",
@@ -50,8 +62,6 @@
     "@typescript-eslint/parser": "^8.65.0",
     "eslint": "^10.8.0",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-react": "^7.37.5",
-    "globals": "^17.8.0",
     "husky": "^9.1.7",
     "jest": "^30.4.2",
     "lint-staged": "^17.2.0",
@@ -63,7 +73,6 @@
     "swagger-ui-express": "^5.0.1",
     "ts-jest": "^29.4.12",
     "tsx": "^4.23.1",
-    "typescript": "^7.0.2",
-    "typescript-eslint": "^8.65.0"
+    "typescript": "^7.0.2"
   }
 }
