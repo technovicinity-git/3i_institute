@@ -15,6 +15,7 @@ import teacherRoutes from '@/modules/teachers/routes';
 import studentRoutes from '@/modules/students/routes';
 import topicRoutes from '@/modules/topics/routes';
 import subjectRoutes from '@/modules/subjects/routes';
+import courseRoutes from '@/modules/courses/routes';
 
 const app: express.Express = express();
 
@@ -64,6 +65,7 @@ app.use('/api/v1/teachers', teacherRoutes);
 app.use('/api/v1/students', studentRoutes);
 app.use('/api/v1/topics', topicRoutes);
 app.use('/api/v1/subjects', subjectRoutes);
+app.use('/api/v1/courses', courseRoutes);
 
 // 404 handler
 app.use((_req, res) => {
