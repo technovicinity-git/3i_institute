@@ -12,6 +12,7 @@ import { generalLimiter } from '@/common/middleware/rate-limiter';
 import authRoutes from '@/modules/auth/routes';
 import userRoutes from '@/modules/users/routes';
 import teacherRoutes from '@/modules/teachers/routes';
+import studentRoutes from '@/modules/students/routes';
 
 const app: express.Express = express();
 
@@ -58,6 +59,7 @@ app.get('/health', (_req, res) => {
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/teachers', teacherRoutes);
+app.use('/api/v1/students', studentRoutes);
 
 // 404 handler
 app.use((_req, res) => {
