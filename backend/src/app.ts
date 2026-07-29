@@ -11,6 +11,7 @@ import { errorHandler } from '@/common/middleware/error-handler';
 import { generalLimiter } from '@/common/middleware/rate-limiter';
 import authRoutes from '@/modules/auth/routes';
 import userRoutes from '@/modules/users/routes';
+import teacherRoutes from '@/modules/teachers/routes';
 
 const app: express.Express = express();
 
@@ -56,6 +57,7 @@ app.get('/health', (_req, res) => {
 // Routes
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/teachers', teacherRoutes);
 
 // 404 handler
 app.use((_req, res) => {
