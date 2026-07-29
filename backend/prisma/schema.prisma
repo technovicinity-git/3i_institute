@@ -19,6 +19,18 @@ enum AccountStatus {
   REJECTED
 }
 
+enum CourseStatus {
+  DRAFT
+  PUBLISHED
+  SUSPENDED
+}
+
+enum CourseType {
+  REGULAR
+  ONLINE
+  MIXED
+}
+
 model User {
   id                String        @id @default(uuid())
   email             String        @unique
@@ -32,27 +44,33 @@ model User {
   createdAt         DateTime      @default(now())
   updatedAt         DateTime      @updatedAt
 
-  profile  Profile?
-  sessions RefreshToken[]
+  profile      Profile?
+  sessions     RefreshToken[]
+  enrollments  Enrollment[]
+  studentExams StudentExam[]
+  courses      Course[]
 
   @@map("users")
 }
 
 model Profile {
-  id          String   @id @default(uuid())
-  userId      String   @unique
-  firstName   String
-  lastName    String
-  phone       String?
-  avatar      String?
-  bio         String?
-  dateOfBirth DateTime?
-  gender      String?
-  address     String?
-  city        String?
-  country     String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                     String   @id @default(uuid())
+  userId                 String   @unique
+  firstName              String
+  lastName               String
+  phone                  String?
+  avatar                 String?
+  bio                    String?
+  dateOfBirth            DateTime?
+  gender                 String?
+  address                String?
+  city                   String?
+  country                String?
+  academicInfo           String?
+  professionalExperience String?
+  cvUrl                  String?
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -70,4 +88,102 @@ model RefreshToken {
 
   @@index([userId])
   @@map("refresh_tokens")
+}
+
+model Course {
+  id          String       @id @default(uuid())
+  title       String
+  description String?
+  thumbnail   String?
+  coverImage  String?
+  topicId     String?
+  subjectId   String?
+  type        CourseType   @default(REGULAR)
+  status      CourseStatus @default(DRAFT)
+  teacherId   String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  teacher     User          @relation(fields: [teacherId], references: [id])
+  topic       Topic?        @relation(fields: [topicId], references: [id])
+  subject     Subject?      @relation(fields: [subjectId], references: [id])
+  enrollments Enrollment[]
+  examPapers  ExamPaper[]
+
+  @@map("courses")
+}
+
+model Enrollment {
+  id         String   @id @default(uuid())
+  userId     String
+  courseId   String
+  enrolledAt DateTime @default(now())
+  completed  Boolean  @default(false)
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseId])
+  @@map("enrollments")
+}
+
+model ExamPaper {
+  id           String       @id @default(uuid())
+  courseId     String
+  title        String
+  duration     Int
+  totalMarks   Int
+  passingMarks Int
+  isFinalExam  Boolean      @default(false)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  course       Course        @relation(fields: [courseId], references: [id])
+  studentExams StudentExam[]
+
+  @@map("exam_papers")
+}
+
+model StudentExam {
+  id          String    @id @default(uuid())
+  userId      String
+  examPaperId String
+  score       Int?
+  submittedAt DateTime @default(now())
+  reviewed    Boolean  @default(false)
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  examPaper ExamPaper @relation(fields: [examPaperId], references: [id])
+
+  @@map("student_exams")
+}
+
+model Topic {
+  id          String    @id @default(uuid())
+  name        String    @unique
+  description String?
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  subjects Subject[]
+  courses  Course[]
+
+  @@map("topics")
+}
+
+model Subject {
+  id          String    @id @default(uuid())
+  name        String
+  description String?
+  topicId     String
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  topic   Topic    @relation(fields: [topicId], references: [id])
+  courses Course[]
+
+  @@unique([name, topicId])
+  @@map("subjects")
 }
