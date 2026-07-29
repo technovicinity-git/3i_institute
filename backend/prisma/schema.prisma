@@ -105,6 +105,8 @@ model Course {
   updatedAt   DateTime     @updatedAt
 
   teacher     User          @relation(fields: [teacherId], references: [id])
+  topic       Topic?        @relation(fields: [topicId], references: [id])
+  subject     Subject?      @relation(fields: [subjectId], references: [id])
   enrollments Enrollment[]
   examPapers  ExamPaper[]
 
@@ -154,4 +156,34 @@ model StudentExam {
   examPaper ExamPaper @relation(fields: [examPaperId], references: [id])
 
   @@map("student_exams")
+}
+
+model Topic {
+  id          String    @id @default(uuid())
+  name        String    @unique
+  description String?
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  subjects Subject[]
+  courses  Course[]
+
+  @@map("topics")
+}
+
+model Subject {
+  id          String    @id @default(uuid())
+  name        String
+  description String?
+  topicId     String
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  topic   Topic    @relation(fields: [topicId], references: [id])
+  courses Course[]
+
+  @@unique([name, topicId])
+  @@map("subjects")
 }

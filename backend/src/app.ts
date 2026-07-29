@@ -13,6 +13,8 @@ import authRoutes from '@/modules/auth/routes';
 import userRoutes from '@/modules/users/routes';
 import teacherRoutes from '@/modules/teachers/routes';
 import studentRoutes from '@/modules/students/routes';
+import topicRoutes from '@/modules/topics/routes';
+import subjectRoutes from '@/modules/subjects/routes';
 
 const app: express.Express = express();
 
@@ -60,6 +62,8 @@ app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/teachers', teacherRoutes);
 app.use('/api/v1/students', studentRoutes);
+app.use('/api/v1/topics', topicRoutes);
+app.use('/api/v1/subjects', subjectRoutes);
 
 // 404 handler
 app.use((_req, res) => {
