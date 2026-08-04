@@ -26,6 +26,8 @@ import examRoutes from '@/modules/exams/routes';
 import certificateRoutes from '@/modules/certificates/routes';
 import waiverRoutes from '@/modules/waiver/routes';
 import reportRoutes from '@/modules/reports/routes';
+import chatRoutes from '@/modules/chat/routes';
+import notificationRoutes from '@/modules/notifications/routes';
 
 const app: express.Express = express();
 
@@ -86,6 +88,8 @@ app.use('/api/v1/exams', examRoutes);
 app.use('/api/v1/certificates', certificateRoutes);
 app.use('/api/v1/waiver', waiverRoutes);
 app.use('/api/v1/reports', reportRoutes);
+app.use('/api/v1/chat', chatRoutes);
+app.use('/api/v1/notifications', notificationRoutes);
 
 // 404 handler
 app.use((_req, res) => {
