@@ -23,6 +23,7 @@ import noteRoutes from '@/modules/notes/routes';
 import materialRoutes from '@/modules/materials/routes';
 import questionRoutes from '@/modules/questions/routes';
 import examRoutes from '@/modules/exams/routes';
+import certificateRoutes from '@/modules/certificates/routes';
 
 const app: express.Express = express();
 
@@ -80,6 +81,7 @@ app.use('/api/v1/notes', noteRoutes);
 app.use('/api/v1/materials', materialRoutes);
 app.use('/api/v1/questions', questionRoutes);
 app.use('/api/v1/exams', examRoutes);
+app.use('/api/v1/certificates', certificateRoutes);
 
 // 404 handler
 app.use((_req, res) => {
