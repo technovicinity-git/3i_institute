@@ -17,8 +17,8 @@ export const createMCQ = async (teacherId: string, input: CreateMCQInput) => {
 
   return {
     ...question,
-    options: JSON.parse(question.options),
-    correctAnswer: parseInt(question.correctAnswer),
+    options: JSON.parse(question.options as string),
+    correctAnswer: parseInt(question.correctAnswer as string),
   };
 };
 
