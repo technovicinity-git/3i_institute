@@ -24,6 +24,8 @@ import materialRoutes from '@/modules/materials/routes';
 import questionRoutes from '@/modules/questions/routes';
 import examRoutes from '@/modules/exams/routes';
 import certificateRoutes from '@/modules/certificates/routes';
+import waiverRoutes from '@/modules/waiver/routes';
+import reportRoutes from '@/modules/reports/routes';
 
 const app: express.Express = express();
 
@@ -82,6 +84,8 @@ app.use('/api/v1/materials', materialRoutes);
 app.use('/api/v1/questions', questionRoutes);
 app.use('/api/v1/exams', examRoutes);
 app.use('/api/v1/certificates', certificateRoutes);
+app.use('/api/v1/waiver', waiverRoutes);
+app.use('/api/v1/reports', reportRoutes);
 
 // 404 handler
 app.use((_req, res) => {
