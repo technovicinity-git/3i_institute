@@ -20,6 +20,9 @@ import batchRoutes from '@/modules/batches/routes';
 import enrollmentRoutes from '@/modules/enrollments/routes';
 import wishlistRoutes from '@/modules/wishlist/routes';
 import noteRoutes from '@/modules/notes/routes';
+import materialRoutes from '@/modules/materials/routes';
+import questionRoutes from '@/modules/questions/routes';
+import examRoutes from '@/modules/exams/routes';
 
 const app: express.Express = express();
 
@@ -74,6 +77,9 @@ app.use('/api/v1/batches', batchRoutes);
 app.use('/api/v1/enrollments', enrollmentRoutes);
 app.use('/api/v1/wishlist', wishlistRoutes);
 app.use('/api/v1/notes', noteRoutes);
+app.use('/api/v1/materials', materialRoutes);
+app.use('/api/v1/questions', questionRoutes);
+app.use('/api/v1/exams', examRoutes);
 
 // 404 handler
 app.use((_req, res) => {
