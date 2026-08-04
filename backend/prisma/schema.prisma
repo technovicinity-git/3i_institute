@@ -55,6 +55,8 @@ model User {
   studentNotes  StudentNote[]
   videoProgress VideoProgress[]
   questions Question[]
+  certificates Certificate[]
+  waiverRequests WaiverRequest[]
 
   @@map("users")
 }
@@ -119,6 +121,8 @@ model Course {
   wishlists    Wishlist[]
   studentNotes StudentNote[]
   materials CourseMaterial[]
+  certificates Certificate[]
+  waiverRequests WaiverRequest[]
 
   @@map("courses")
 }
@@ -364,4 +368,44 @@ model ExamQuestion {
 
   @@unique([examPaperId, questionId])
   @@map("exam_questions")
+}
+
+enum CertificateType {
+  ATTENDANCE
+  COMPLETION
+}
+
+model Certificate {
+  id                String          @id @default(uuid())
+  userId            String
+  courseId          String
+  type              CertificateType
+  certificateNumber String          @unique
+  issuedAt          DateTime        @default(now())
+  createdAt         DateTime        @default(now())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course Course @relation(fields: [courseId], references: [id])
+
+  @@unique([userId, courseId, type])
+  @@map("certificates")
+}
+
+model WaiverRequest {
+  id                 String    @id @default(uuid())
+  userId             String
+  courseId           String
+  reason             String
+  supportingInfo     String?
+  status             String    @default("PENDING")
+  discountPercentage Int       @default(0)
+  rejectionReason    String?
+  processedAt        DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course Course @relation(fields: [courseId], references: [id])
+
+  @@map("waiver_requests")
 }
