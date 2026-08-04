@@ -57,6 +57,8 @@ model User {
   questions Question[]
   certificates Certificate[]
   waiverRequests WaiverRequest[]
+  sentMessages ChatMessage[]
+  notifications Notification[]
 
   @@map("users")
 }
@@ -123,6 +125,7 @@ model Course {
   materials CourseMaterial[]
   certificates Certificate[]
   waiverRequests WaiverRequest[]
+  chatMessages ChatMessage[]
 
   @@map("courses")
 }
@@ -408,4 +411,33 @@ model WaiverRequest {
   course Course @relation(fields: [courseId], references: [id])
 
   @@map("waiver_requests")
+}
+
+model ChatMessage {
+  id        String   @id @default(uuid())
+  courseId  String
+  senderId  String
+  message   String
+  createdAt DateTime @default(now())
+
+  course Course @relation(fields: [courseId], references: [id])
+  sender User   @relation(fields: [senderId], references: [id], onDelete: Cascade)
+
+  @@index([courseId])
+  @@map("chat_messages")
+}
+
+model Notification {
+  id        String    @id @default(uuid())
+  userId    String
+  title     String
+  body      String
+  type      String    @default("GENERAL")
+  isRead    Boolean   @default(false)
+  createdAt DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("notifications")
 }
