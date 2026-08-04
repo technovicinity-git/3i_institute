@@ -44,11 +44,15 @@ model User {
   createdAt         DateTime      @default(now())
   updatedAt         DateTime      @updatedAt
 
-  profile      Profile?
-  sessions     RefreshToken[]
-  enrollments  Enrollment[]
-  studentExams StudentExam[]
-  courses      Course[]
+  profile       Profile?
+  sessions      RefreshToken[]
+  enrollments   Enrollment[]
+  studentExams  StudentExam[]
+  courses       Course[]
+  batchStudents BatchStudent[]
+  subscription  Subscription?
+  wishlists     Wishlist[]
+  studentNotes  StudentNote[]
 
   @@map("users")
 }
@@ -109,6 +113,9 @@ model Course {
   subject     Subject?      @relation(fields: [subjectId], references: [id])
   enrollments Enrollment[]
   examPapers  ExamPaper[]
+  batches     Batch[]
+  wishlists    Wishlist[]
+  studentNotes StudentNote[]
 
   @@map("courses")
 }
@@ -186,4 +193,91 @@ model Subject {
 
   @@unique([name, topicId])
   @@map("subjects")
+}
+
+model Batch {
+  id        String    @id @default(uuid())
+  name      String
+  capacity  Int
+  isClosed  Boolean   @default(false)
+  courseId  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  course   Course          @relation(fields: [courseId], references: [id])
+  sessions BatchSession[]
+  students BatchStudent[]
+
+  @@map("batches")
+}
+
+model BatchSession {
+  id          String    @id @default(uuid())
+  batchId     String
+  title       String
+  date        DateTime
+  time        String
+  notes       String?
+  isCompleted Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  batch Batch @relation(fields: [batchId], references: [id])
+
+  @@map("batch_sessions")
+}
+
+model BatchStudent {
+  id        String   @id @default(uuid())
+  batchId   String
+  userId    String
+  joinedAt  DateTime @default(now())
+
+  batch Batch @relation(fields: [batchId], references: [id])
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([batchId, userId])
+  @@map("batch_students")
+}
+
+model Subscription {
+  id           String    @id @default(uuid())
+  userId       String    @unique
+  isActive     Boolean   @default(true)
+  subscribedAt DateTime  @default(now())
+  expiresAt    DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("subscriptions")
+}
+
+model Wishlist {
+  id        String   @id @default(uuid())
+  userId    String
+  courseId  String
+  addedAt   DateTime @default(now())
+
+  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseId])
+  @@map("wishlists")
+}
+
+model StudentNote {
+  id        String   @id @default(uuid())
+  userId    String
+  courseId  String
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@map("student_notes")
 }
