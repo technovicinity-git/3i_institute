@@ -25,8 +25,31 @@ const options: swaggerJsdoc.Options = {
           type: 'http',
           scheme: 'bearer',
           bearerFormat: 'JWT',
+          description: 'Enter your JWT token from the login response',
         },
       },
+      schemas: {
+        LoginResponse: {
+          type: 'object',
+          properties: {
+            success: { type: 'boolean', example: true },
+            message: { type: 'string', example: 'Login successful' },
+            data: {
+              type: 'object',
+              properties: {
+                user: { type: 'object' },
+                accessToken: { type: 'string' },
+                refreshToken: { type: 'string' },
+              },
+            },
+          },
+        },
+      },
+      security: [
+        {
+          bearerAuth: [],
+        },
+      ],
     },
   },
   apis: ['./src/modules/**/routes.ts'],
