@@ -28,6 +28,7 @@ import waiverRoutes from '@/modules/waiver/routes';
 import reportRoutes from '@/modules/reports/routes';
 import chatRoutes from '@/modules/chat/routes';
 import notificationRoutes from '@/modules/notifications/routes';
+import cmsRoutes from '@/modules/cms/routes';
 
 const app: express.Express = express();
 
@@ -90,6 +91,7 @@ app.use('/api/v1/waiver', waiverRoutes);
 app.use('/api/v1/reports', reportRoutes);
 app.use('/api/v1/chat', chatRoutes);
 app.use('/api/v1/notifications', notificationRoutes);
+app.use('/api/v1/cms', cmsRoutes);
 
 // 404 handler
 app.use((_req, res) => {
